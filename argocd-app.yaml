@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: webserver
+  namespace: argocd   # ArgoCD is usually installed here
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/cerlane/gitops-webserver.git
+    targetRevision: main
+    path: manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: webserver
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
